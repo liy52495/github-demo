@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/vue_2.5.22.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        {{ message }}
+    </div>
+
+    <div id="app-2">
+        <span v-bind:title='message'>v-指令:元素节点的title属性和vue实例的message属性保持一致</span>
+    </div>
+
+    <div id="app-3">
+        <p v-if='seen'>v-if指令<br>//不仅可以把数绑定到dom文本或attribute,
+            <br>//还可以绑定到DOM结构.此外,在vue插入/更新/移除元素时自动应用过渡效果</p>
+    </div>
+
+    <div id="app-4">
+        <ol>
+            <li v-for='todo in todos'>
+                {{ todo.text }}
+            </li>
+        </ol>
+    </div>
+
+    <div id="app-5">
+        <p>{{ message }}</p>
+        <button v-on:click='reverseMessage'>v-on指令</button>
+    </div>
+
+    <div id="app-6">
+        <p>{{ message }}</p>
+        <input v-model='message'>
+    </div>
+
+    <div id="app-7">
+        <ol>
+            <!-- 现在我们为每个todo-item提供todo对象,todo对象是变量 -->
+            <todo-item v-for='item in groceryList' v-bind:todo='item' v-bind:key='item.id'></todo-item>
+        </ol>
+    </div>
+    <script>
+        // 组件化应用构建
+        Vue.component('todo-item', {
+            //todo-item组件现在接受一个"prop",类似于一个自定义属性
+            //这个prop名为todo.
+            props: ['todo'],
+            template: '<li>{{ todo.text }}</li>'
+        })
+
+        var app7 = new Vue({
+                el: '#app-7',
+                data: {
+                    groceryList: [{
+                        id: 0,
+                        text: '蔬菜'
+                    }, {
+                        id: 1,
+                        text: '奶酪'
+                    }, {
+                        id: 2,
+                        text: '随便其他'
+                    }]
+                }
+            })
+            //处理用户输入
+        var app5 = new Vue({
+            el: '#app-5',
+            data: {
+                message: '处理用户输入之v-on指令添加事件监听器'
+            },
+            methods: {
+                reverseMessage: function() {
+                    //1、splite(' ')可以将字符串按某个字符或者其他分割,返回数组。
+                    //2、reverse()该方法会改变原来的数组，而不会创建新的数组,此函数可以将数组倒序排列。
+                    //3、join()方法用于把数组中的所有元素放入一个字符串。元素是通过指定的分隔符进行分隔的,指定分隔方法join(' ');
+                    this.message = this.message.split('').reverse().join('')
+                }
+            }
+        })
+
+        var app6 = new Vue({
+            el: '#app-6',
+            data: {
+                message: '处理用户输入之v-model指令:实现表单输入和应用状态之间的双向绑定'
+            }
+        })
+
+        //条件与循环v-for:
+        //app4.todos.push({text:'新项目'})
+        var app4 = new Vue({
+            el: '#app-4',
+            data: {
+                todos: [{
+                    text: 'v-for指令'
+                }, {
+                    text: '哈哈哈'
+                }, {
+                    text: '嘿嘿嘿'
+                }]
+            }
+        })
+
+        //条件与循环v-if
+        var app3 = new Vue({
+            el: '#app-3',
+            data: {
+                seen: true
+                    //不仅可以把数绑定到dom文本或attribute,
+                    //还可以绑定到DOM结构.此外,在vue插入/更新/移除元素时自动应用过渡效果
+
+
+            }
+        })
+
+
+        //v-指令:元素节点的title属性和vue实例的message属性保持一致
+        var app2 = new Vue({
+            el: '#app-2',
+            data: {
+                message: '页面加载于' + 1
+            }
+        })
+
+        //响应式渲染
+        var app = new Vue({
+            el: '#app',
+            data: {
+                message: 'Hello Vue!响应式渲染'
+            }
+        })
+    </script>
+</body>
+
+</html>
